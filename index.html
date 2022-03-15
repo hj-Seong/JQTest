@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1>넌센스 Quiz 맞추기</h1>
+    <p>3문제 중복있음</p>
+    <h3><a href="#" id="start">시작</a></h3>
+    
+    <h3 id ="quiz"> </h3>
+    <form id="input_form">
+        <input type="text" id="input_text">
+    </form>
+    <p id="score"></p>
+
+
+    <script>
+    // 넌센스 Quiz 만들기
+    let score = 0;
+    let count = 0;
+    let randomNum = 0;
+    const quizArray = [
+        { quiz: "왕이 넘어지면", answer:"킹콩" },
+        { quiz: "오리가 얼면", answer:"언덕" },
+        { quiz: "한국의 수도는", answer:"서울" },
+        { quiz: "5+9", answer:"14" },
+        { quiz: "5+10", answer:"15" }
+    ];
+    
+    $("#input_text").hide();
+
+    $("#start").on("click", function(e){
+        e.preventDefault();
+        randomQuiz();
+        $("score").text("");
+        $("#input_text").hide().slideDown().focus();
+    });
+
+    $("#input_form").on("submit", function(e){
+        e.preventDefault();
+        count++;
+        if( $("#input_text").val() == quizArray[randomNum].answer) {
+            score++;
+            randomQuiz();
+        }
+        if( count >= 3) {
+            $("#score").text(`3개 중에서 ${score}개 맞췄습니다`);
+            count = 0;
+            score = 0;
+            $("#quiz").text("");
+            $("#input_text").hide();
+        }
+        $("#input_text").val("");
+    });
+
+    function randomQuiz() {
+        randomNum = Math.floor( Math.random()*quizArray.length );
+        $("#quiz").text(quizArray[randomNum].quiz);
+    }
+    </script>
+</body>
+</html>
